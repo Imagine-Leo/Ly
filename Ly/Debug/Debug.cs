@@ -73,7 +73,7 @@ namespace Ly.DebugTool
             }
         }
 
-        public void DllLog(string str)
+        public void DllLog(string str,LogType logType=LogType.Console)
         {
 #if UNITY_EDITOR
             Log(str,"cyan","Dll:");
