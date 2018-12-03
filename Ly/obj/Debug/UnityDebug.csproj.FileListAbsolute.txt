@@ -1,0 +1,8 @@
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\obj\Debug\UnityDebug.csproj.CoreCompileInputs.cache
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\bin\Debug\UnityDebug.pdb
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\bin\Debug\UnityEngine.dll
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\bin\Debug\UnityEngine.xml
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\obj\Debug\UnityDebug.csproj.CopyComplete
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\obj\Debug\UnityDebug.pdb
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\bin\Debug\UnityDebug.dll
+C:\Users\Nova\source\repos\UnityDebug\UnityDebug\obj\Debug\UnityDebug.dll
