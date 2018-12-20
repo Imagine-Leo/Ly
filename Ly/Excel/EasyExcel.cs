@@ -19,9 +19,9 @@ namespace Ly.Excel
         public string excelName = "";
         public char[] _columnName = "ABCDEFGHIGKLMNOPQRSTUVWXYZ".ToCharArray();
 
-        public List<ExcelUnit> ReadExcelOnPc(string path, bool needreturn = false)
+        public List<ExcelRowData> ReadExcelOnPc(string path, bool needreturn = false)
         {
-            List<ExcelUnit> excelList = new List<ExcelUnit>();
+            List<ExcelRowData> excelList = new List<ExcelRowData>();
             try
             {
                 FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read);
@@ -33,7 +33,7 @@ namespace Ly.Excel
                 Debug.Instance.DllLog("列数：" + columns, DebugTool.LogType.UnityLog);
                 for (int i = 0; i < rows; i++)
                 {
-                    ExcelUnit column_Value = new ExcelUnit();
+                    ExcelRowData column_Value = new ExcelRowData();
                     for (int j = 0; j < columns; j++)
                     {
                         string value = result.Tables[0].Rows[i][j].ToString();
@@ -75,7 +75,7 @@ namespace Ly.Excel
                 Debug.Instance.DllLog(excelPath + "is not exist!", DebugTool.LogType.UnityLogError);
                 return;
             }
-            List<ExcelUnit> excelResult = ReadExcelOnPc(excelPath, true);
+            List<ExcelRowData> excelResult = ReadExcelOnPc(excelPath, true);
             easyXml.InitXml(Application.dataPath + "/StreamingAssets/config/" + excelName + ".xml", "root", "Leo", "");
             for (int i = 0; i < excelResult.Count; i++)
             {
@@ -93,14 +93,17 @@ namespace Ly.Excel
             //#endif
         }
     }
-    public class ExcelUnit
+    public class ExcelRowData
     {
         public List<string> values;
-        public ExcelUnit()
+        public ExcelRowData()
         {
             values = new List<string>();
         }
     }
+
+
+
     public enum EnumExcelFormat
     {
         xlsm = 1,

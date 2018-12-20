@@ -11,39 +11,42 @@ namespace Ly.Base
 {
     public class SingleInstance<T> where T : new()
     {
-        private static T instance = default(T);
+        private static T _instance = default(T);
         private static object objectLock = new object();
         public static T Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
                     object obj;
                     Monitor.Enter(obj = objectLock);
                     try
                     {
-                        if (instance == null)
-                            instance = default(T) == null ? Activator.CreateInstance<T>() : default(T);
+                        if (_instance == null)
+                            _instance = default(T) == null ? Activator.CreateInstance<T>() : default(T);
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogWarning(ex.Message);
+                        UnityEngine.Debug.LogError(ex.Message);
                     }
                     finally
                     {
                         Monitor.Exit(obj);
                     }
                 }
-                return instance;
+                return _instance;
+            }
+            protected set
+            {
+                _instance = value;
             }
         }
-        private SingleInstance() { }
+        public SingleInstance() { }
     }
     public class SingleInstanceComponent<T> where T : MonoBehaviour
     {
         private static T instance = null;
-        private static object objectLock = new object();
         public static T Instance
         {
             get
@@ -52,16 +55,20 @@ namespace Ly.Base
                     Ly.DebugTool.Debug.LogError("instance null Error,Waiting Awake init...");
                 return instance;
             }
-            private set
+            protected set
             {
                 instance = value;
             }
         }
-        public virtual void Awake()
+        public void Awake()
         {
             if (instance == null)
                 instance = this as T;
+            else
+            {
+                UnityEngine.Debug.LogError("instance is already have one,i will destory this");
+            }
         }
-        private SingleInstanceComponent() { }
+        public SingleInstanceComponent() { }
     }
 }

@@ -19,7 +19,6 @@ C:\Users\Nova\source\repos\Ly\Ly\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Nova\source\repos\Ly\Ly\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\Nova\source\repos\Ly\Ly\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Nova\source\repos\Ly\Ly\obj\Debug\Ly.csprojAssemblyReference.cache
-C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\Ly.exe
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\Ly.pdb
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\ExcelDataReader.DataSet.dll
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\ExcelDataReader.dll
@@ -27,9 +26,13 @@ C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\UnityEngine.xml
-C:\Users\Nova\Desktop\Leo\git\Ly\Ly\obj\Debug\Ly.csprojAssemblyReference.cache
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\obj\Debug\Ly.csproj.CoreCompileInputs.cache
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\obj\Debug\Ly.csproj.CopyComplete
-C:\Users\Nova\Desktop\Leo\git\Ly\Ly\obj\Debug\Ly.exe
 C:\Users\Nova\Desktop\Leo\git\Ly\Ly\obj\Debug\Ly.pdb
+C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\UnityEngine.dll
+C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\UnityEngine.xml
+C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\System.Data.DataSetExtensions.dll
+C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\Ly.exe.config
+C:\Users\Nova\Desktop\Leo\git\Ly\Ly\bin\Debug\Ly.exe
+C:\Users\Nova\Desktop\Leo\git\Ly\Ly\obj\Debug\Ly.csprojAssemblyReference.cache
+C:\Users\Nova\Desktop\Leo\git\Ly\Ly\obj\Debug\Ly.exe

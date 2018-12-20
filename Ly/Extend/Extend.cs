@@ -9,9 +9,17 @@ namespace Ly.Extend
 {
     public static class Extend
     {
-        public static void ExtendLogClipName(this AudioClip audioClip)
+        public static void ClipToWav(this AudioClip audioClip)
         {
-            Ly.DebugTool.Debug.Log(audioClip.name);
+
+        }
+        public static void WavToMp3(this float[] wavClip)
+        {
+
+        }
+        public static void UnityClipToMp3(this AudioClip audioClip)
+        {
+
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Ly.DebugTool
 {
-    public class Debug
+    public class Debug:Ly.Base.SingleInstance<Debug>
     {
         public static RunTimeEnvironment runTimeEnvironment = RunTimeEnvironment.ConsoleView;
         public static string logPrefix = "";
@@ -15,37 +15,11 @@ namespace Ly.DebugTool
         public static string errorPrefix = "!!!!";
         public static string consolePrefix = ">>>>";
 
-        private static object getLock = new object();
-        private static object setLock = new object();
-
-        private static Debug _Instance = null;
-        public static Debug Instance
+        public Debug()
         {
-            get
-            {
-                if (_Instance == null)
-                {
-                    lock (getLock)
-                    {
-                        if (_Instance == null)
-                            _Instance = new Debug();
-                    }
-                }
-
-                return _Instance;
-            }
-            set
-            {
-                lock (setLock)
-                {
-                    _Instance = value;
-                }
-            }
-        }
-        private Debug()
-        {
-            DllLog("init");
-            Console.ForegroundColor = ConsoleColor.Green;
+            DllLog("Init Debug instance!");
+            if (runTimeEnvironment == RunTimeEnvironment.ConsoleView)
+                Console.ForegroundColor = ConsoleColor.Green;
         }
 
         public static void ABCDebug(string str, string color = "white", LogType logType = LogType.UnityLog)
@@ -73,14 +47,18 @@ namespace Ly.DebugTool
             }
         }
 
-        public void DllLog(string str,LogType logType=LogType.Console)
+        public void DllLog(string str, LogType logType = LogType.Console)
         {
-#if UNITY_EDITOR
-            Log(str,"cyan","Dll:");
-#else
-            Console.WriteLine(str);
-            Console.WriteLine(new string('=', 40));
-#endif
+            if (runTimeEnvironment == RunTimeEnvironment.Unity)
+            {
+                Log(str, "cyan", "Dll:");
+            }
+
+            else if (runTimeEnvironment == RunTimeEnvironment.ConsoleView)
+            {
+                Console.WriteLine(str);
+                Console.WriteLine(new string('=', 40));
+            }
         }
 
         public static void Log(string str, string color = "white", string prefix = "")

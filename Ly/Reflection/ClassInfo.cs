@@ -18,8 +18,9 @@ namespace Ly.Reflection
             Assembly ass = Assembly.GetExecutingAssembly();
             InvokeMemberFunc(typeof(DebugTool.Debug), "DllLog");
         }
-        public static void DebugAllInfo(Type type)
+        public static List<string> ClassAllMembersInfo(Type type)
         {
+            List<string> members = new List<string>();
             MemberInfo[] minss = type.GetMembers(
                 BindingFlags.Instance |
                 BindingFlags.Static |
@@ -29,8 +30,9 @@ namespace Ly.Reflection
 
             foreach (MemberInfo item in minss)
             {
-                Debug.Instance.DllLog(String.Format("{0}", item));
+                members.Add(item.Name);
             }
+            return members;
         }
 
         /// <summary>
@@ -82,5 +84,6 @@ namespace Ly.Reflection
                 type.InvokeMember(funcName, BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, target, new string[] { "TestLog" }, null);
             }
         }
+
     }
 }
