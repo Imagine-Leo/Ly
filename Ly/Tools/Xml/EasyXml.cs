@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using Debug = Ly.Tools.Debug;
 
 namespace Ly.Tools
 {
@@ -13,79 +12,73 @@ namespace Ly.Tools
         {
             _configPath = path;
             configDict = new Dictionary<string, string>();
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
 
             xmlDoc.Load(_configPath);
             XmlNode root = xmlDoc.DocumentElement;
-            XmlNodeList nodeList = root.ChildNodes;
-            for (int i = 0; i < nodeList.Count; i++)
+            var nodeList = root.ChildNodes;
+            for (var i = 0; i < nodeList.Count; i++)
             {
-                XmlNode curNode = nodeList[i];
-                string key = curNode.Name;
-                string val = curNode.InnerText;
+                var curNode = nodeList[i];
+                var key = curNode.Name;
+                var val = curNode.InnerText;
                 if (!configDict.ContainsKey(key))
-                {
                     configDict.Add(key, val);
-                }
                 else
-                {
                     Debug.Instance.DllLog("Duplicated key " + key + " in config file " + _configPath, LogType.UnityLogError);
-                }
             }
         }
+
         public string GetStringXML(string key, string defaultVal)
         {
             if (configDict.ContainsKey(key))
             {
                 return configDict[key];
             }
-            else
-            {
-                Debug.Instance.DllLog("配置表没有此配置返回默认值并写入默认值",LogType.UnityLogWarning);
-                SetString(key, defaultVal);
-                return defaultVal;
-            }
+
+            Debug.Instance.DllLog("配置表没有此配置返回默认值并写入默认值", LogType.UnityLogWarning);
+            SetString(key, defaultVal);
+            return defaultVal;
         }
+
         public void SetString(string key, string val)
         {
             if (configDict.ContainsKey(key))
-            {
                 configDict[key] = val;
-            }
             else
-            {
                 configDict.Add(key, val);
-            }
             UpdateXml(key, val);
         }
+
         public void RemoveNodeXML(string nodeName)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
             xmlDoc.Load(_configPath);
-            XmlNodeList list = xmlDoc.DocumentElement.ChildNodes;
-            for (int i = 0; i < list.Count; i++)
+            var list = xmlDoc.DocumentElement.ChildNodes;
+            for (var i = 0; i < list.Count; i++)
             {
-                XmlElement ee = (XmlElement)list[i];
+                var ee = (XmlElement) list[i];
                 if (ee.Name == nodeName)
                 {
                     xmlDoc.DocumentElement.RemoveChild(ee);
-                    Debug.Instance.DllLog("成功移除配置表属性" + nodeName,LogType.UnityLog);
+                    Debug.Instance.DllLog("成功移除配置表属性" + nodeName, LogType.UnityLog);
                     break;
                 }
             }
 
             xmlDoc.Save(_configPath);
         }
+
         private void UpdateXml(string key, string val)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
             xmlDoc.Load(_configPath);
             XmlNode root = xmlDoc.DocumentElement;
-            XmlNodeList nodeList = root.ChildNodes;
-            bool found = false;
-            for (int i = 0; i < nodeList.Count; i++)
+            var nodeList = root.ChildNodes;
+            var found = false;
+            for (var i = 0; i < nodeList.Count; i++)
             {
-                XmlNode curNode = nodeList[i];
+                var curNode = nodeList[i];
                 if (curNode.Name == key)
                 {
                     curNode.InnerText = val;
@@ -93,12 +86,14 @@ namespace Ly.Tools
                     break;
                 }
             }
+
             if (!found)
             {
-                XmlNode node = xmlDoc.CreateNode(XmlNodeType.Element, key, null);
+                var node = xmlDoc.CreateNode(XmlNodeType.Element, key, null);
                 node.InnerText = val;
                 root.AppendChild(node);
             }
+
             xmlDoc.Save(_configPath);
             UnityEngine.Debug.Log(xmlDoc.InnerXml);
         }

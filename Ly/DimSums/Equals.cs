@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Ly.Tools;
 using Newtonsoft.Json;
-using Debug = Ly.Tools.Debug;
 
 namespace Ly
 {
@@ -22,13 +21,13 @@ namespace Ly
                 return true;
             }
 
-            if (other.GetType() != this.GetType())
+            if (other.GetType() != GetType())
             {
                 Debug.Instance.DllLog("type is different", LogType.UnityLogWarning);
                 return false;
             }
-            return Equals(other);
 
+            return Equals(other);
         }
 
         public bool Equals(object other, List<string> filedList = null)
@@ -36,24 +35,24 @@ namespace Ly
             if (filedList == null)
             {
                 filedList = new List<string>();
-                Type type = other.GetType();
+                var type = other.GetType();
                 Debug.Instance.DllLog("Type:" + JsonConvert.SerializeObject(type));
                 filedList = ClassInfo.ClassAllMembersInfo(type);
-                for (int i = 0; i < filedList.Count; i++)
-                {
+                for (var i = 0; i < filedList.Count; i++)
                     if (filedList[i].StartsWith("."))
                     {
                         filedList.RemoveAt(i);
                         i--;
                     }
-                }
+
                 Debug.Instance.DllLog(JsonConvert.SerializeObject(filedList));
             }
-            string str1 = JsonConvert.SerializeObject(this);
-            string str2 = JsonConvert.SerializeObject(other);
+
+            var str1 = JsonConvert.SerializeObject(this);
+            var str2 = JsonConvert.SerializeObject(other);
             return StringArrayEquals(filedList, JsonTool.GetValuesByToken(filedList.ToArray(), str1),
                 JsonTool.GetValuesByToken(filedList.ToArray(), str2)
-                );
+            );
         }
 
         private bool StringArrayEquals(List<string> keys, string[] str1, string[] str2)
@@ -62,8 +61,7 @@ namespace Ly
                 return false;
             if (str1.Length != str2.Length)
                 return false;
-            for (int i = 0; i < str1.Length; i++)
-            {
+            for (var i = 0; i < str1.Length; i++)
                 if (str1[i] != str2[i])
                 {
                     Console.WriteLine(keys[i] + ": " + str1[i] + " != " + str2[i]);
@@ -73,7 +71,7 @@ namespace Ly
                 {
                     Console.WriteLine(keys[i] + ": " + str1[i] + " = " + str2[i]);
                 }
-            }
+
             return true;
         }
     }

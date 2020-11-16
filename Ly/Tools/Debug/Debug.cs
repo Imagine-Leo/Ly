@@ -2,7 +2,7 @@
 
 namespace Ly.Tools
 {
-    public class Debug:SingleInstance<Debug>
+    public class Debug : SingleInstance<Debug>
     {
         public static RunTimeEnvironment runTimeEnvironment = RunTimeEnvironment.ConsoleView;
         public static string logPrefix = "";
@@ -37,8 +37,6 @@ namespace Ly.Tools
                     break;
                 case LogType.None:
                     break;
-                default:
-                    break;
             }
         }
 
@@ -60,10 +58,12 @@ namespace Ly.Tools
         {
             UnityEngine.Debug.Log(string.Format("<color={0}>" + prefix + str + "</color>", color));
         }
+
         public static void LogWarning(string str, string color = "yellow", string prefix = "!")
         {
             UnityEngine.Debug.Log(string.Format("<color={0}>" + prefix + str + "</color>", color));
         }
+
         public static void LogError(string str, string color = "red", string prefix = "!!!!")
         {
             UnityEngine.Debug.LogError(string.Format("<color={0}>" + prefix + str + "</color>", color));

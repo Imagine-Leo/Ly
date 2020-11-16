@@ -11,11 +11,8 @@ namespace Ly
             try
             {
                 var res = JToken.Parse(fromData);
-                string[] values = new string[jTokens.Length];
-                for (int i = 0; i < jTokens.Length; i++)
-                {
-                    values[i] = res[jTokens[i]].ToString();
-                }
+                var values = new string[jTokens.Length];
+                for (var i = 0; i < jTokens.Length; i++) values[i] = res[jTokens[i]].ToString();
 
                 return values;
             }

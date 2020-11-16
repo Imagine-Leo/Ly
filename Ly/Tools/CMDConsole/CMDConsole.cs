@@ -2,37 +2,19 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.Win32.SafeHandles;
 using UnityEngine;
-using Debug = Ly.Tools.Debug;
-
 
 namespace Ly.Tools.CMDConsole
 {
     //http://blog.csdn.net/cartzhang/article/details/49884507
     /// <summary>
-    /// 使用方法：Initialize();
-    ///           CMDUpdate()放入Update中
+    ///     使用方法：Initialize();
+    ///     CMDUpdate()放入Update中
     /// </summary>
     public class CMDConsole
     {
-        #region
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool AttachConsole(uint dwProcessId);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool AllocConsole();
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool FreeConsole();
-
-        [DllImport("kernel32.dll", EntryPoint = "GetStdHandle", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr GetStdHandle(int nStdHandle);
-
-        [DllImport("kernel32.dll")]
-        static extern bool SetConsoleTitle(string lpConsoleTitle);
-
-        #endregion
+        public string inputString;
 
         private TextWriter oldOutput;
 
@@ -43,11 +25,11 @@ namespace Ly.Tools.CMDConsole
 
             try
             {
-                IntPtr p = User32API.GetCurrentWindowHandle();
+                var p = User32API.GetCurrentWindowHandle();
                 Debug.Instance.DllLog("当前程序句柄" + p, LogType.UnityLog);
-                Microsoft.Win32.SafeHandles.SafeFileHandle safeFileHandle = new Microsoft.Win32.SafeHandles.SafeFileHandle(p, true);
-                FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write);
-                StreamWriter standardOutput = new StreamWriter(fileStream, Encoding.ASCII);
+                var safeFileHandle = new SafeFileHandle(p, true);
+                var fileStream = new FileStream(safeFileHandle, FileAccess.Write);
+                var standardOutput = new StreamWriter(fileStream, Encoding.ASCII);
                 standardOutput.AutoFlush = true;
                 Console.SetOut(standardOutput);
             }
@@ -70,8 +52,7 @@ namespace Ly.Tools.CMDConsole
 
         //===========================================================输入===========================================================================
         //public delegate void InputText( string strInput );
-        public event System.Action<string> OnInputText;
-        public string inputString;
+        public event Action<string> OnInputText;
 
         public void RedrawInputLine()
         {
@@ -117,7 +98,6 @@ namespace Ly.Tools.CMDConsole
             {
                 inputString += " ";
                 RedrawInputLine();
-                return;
             }
         }
 
@@ -125,9 +105,28 @@ namespace Ly.Tools.CMDConsole
         {
             // System.Text.Encoding test = Console.InputEncoding;
             Console.CursorLeft = 0;
-            Console.Write(new String(' ', Console.BufferWidth));
+            Console.Write(new string(' ', Console.BufferWidth));
             Console.CursorTop--;
             Console.CursorLeft = 0;
         }
+
+        #region
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool AttachConsole(uint dwProcessId);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool FreeConsole();
+
+        [DllImport("kernel32.dll", EntryPoint = "GetStdHandle", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        private static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll")]
+        private static extern bool SetConsoleTitle(string lpConsoleTitle);
+
+        #endregion
     }
 }

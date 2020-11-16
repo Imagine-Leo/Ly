@@ -2,12 +2,13 @@
 using System.Threading;
 using UnityEngine;
 using Debug = Ly.Tools.Debug;
+using Object = UnityEngine.Object;
 
 namespace Ly
 {
     public class SingleInstance<T> where T : new()
     {
-        private static T _instance = default(T);
+        private static T _instance;
         private static object objectLock = new object();
 
         public static T Instance
@@ -40,7 +41,7 @@ namespace Ly
 
     public class SingleInstanceComponent<T> where T : MonoBehaviour
     {
-        private static T instance = null;
+        private static T instance;
 
         public static T Instance
         {
@@ -49,7 +50,7 @@ namespace Ly
                 if (!instance)
                 {
                     Debug.Log($"init manager {typeof(T).Name}");
-                    instance = UnityEngine.Object.FindObjectOfType<T>();
+                    instance = Object.FindObjectOfType<T>();
                     if (!instance)
                     {
                         instance = new GameObject().AddComponent<T>();
