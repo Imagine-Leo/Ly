@@ -1,27 +1,28 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace Ly.Timer
+namespace Ly.Tools.Timer
 {
     public class TimerComponent : MonoBehaviour
     {
         public event TimerClass.TimeUpDelegate TimeUpEvent;
+
         public int paramOffset
         {
             get { return _timer.param; }
             set { _timer.param = value; }
         }
+
         private List<string> m_eventQueueList;
         private TimerClass _timer;
+
         private void Awake()
         {
             _timer = new TimerClass();
             m_eventQueueList = new List<string>();
             _timer.TimeUpEvent += m_TimeUpEventCallBack;
         }
+
         private void OnApplicationQuit()
         {
             Debug.Log("~quit timer");
@@ -74,24 +75,25 @@ namespace Ly.Timer
                 }
             }
         }
+
         public void Kill()
         {
             _timer.Stop();
         }
+
         private void m_TimeUpEventCallBack(object sender, string tag)
         {
             m_eventQueueList.Add(tag);
         }
+
         public static long GetCurTimetamp()
         {
             return TimerClass.GetCurrentTimestamp();
         }
+
         public static long GetDeltaMilliSecond(long startTicks, long endTicks)
         {
             return TimerClass.GetDeltaMilliSecond(startTicks, endTicks);
         }
-
-
-
     }
 }

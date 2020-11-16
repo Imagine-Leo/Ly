@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using Unity.Collections;
 using System.IO;
-using Debug = Ly.DebugTool.Debug;
+using System.Xml;
+using Debug = Ly.Tools.Debug;
 
-namespace Ly.Xml
+namespace Ly.Tools
 {
     public class MultilevelXml
     {
@@ -28,7 +25,7 @@ namespace Ly.Xml
             {
                 if (string.IsNullOrEmpty(Path))
                 {
-                    Debug.Instance.DllLog("Path is IsNullOrEmpty!", DebugTool.LogType.UnityLogWarning);
+                    Debug.Instance.DllLog("Path is IsNullOrEmpty!", LogType.UnityLogWarning);
                     return;
                 }
                 else
@@ -58,7 +55,7 @@ namespace Ly.Xml
             }
 
             root = myxml.DocumentElement;
-            Debug.Instance.DllLog("initxml初始化成功", DebugTool.LogType.UnityLog);
+            Debug.Instance.DllLog("initxml初始化成功", LogType.UnityLog);
         }
 
         /// <summary>
@@ -81,19 +78,19 @@ namespace Ly.Xml
             XmlNode parentNode = myxml.SelectSingleNode(parentName == root.Name ? parentName : root.Name + "//" + parentName);
             if (parentNode == null)
             {
-                Debug.Instance.DllLog("Add 不存在此父节点" + parentName, DebugTool.LogType.UnityLogWarning);
+                Debug.Instance.DllLog("Add 不存在此父节点" + parentName, LogType.UnityLogWarning);
                 return;
             }
             parentNode.AppendChild(temp);
             myxml.Save(filePath);
-            Debug.Instance.DllLog("成功添加数据信息：" + nodeName,DebugTool.LogType.UnityLog);
+            Debug.Instance.DllLog("成功添加数据信息：" + nodeName,LogType.UnityLog);
         }
         public void ReMoveNode(string parentName, string nodeName)
         {
             XmlNode parentNode = myxml.SelectSingleNode(parentName);
             if (parentNode == null)
             {
-                Debug.Instance.DllLog("不存在此父节点",DebugTool.LogType.UnityLogWarning);
+                Debug.Instance.DllLog("不存在此父节点",LogType.UnityLogWarning);
                 return;
             }
             XmlNodeList childList = parentNode.ChildNodes;
@@ -102,7 +99,7 @@ namespace Ly.Xml
                 if (childList[i].Name == nodeName)
                 {
                     parentNode.RemoveChild(childList[i]);
-                    Debug.Instance.DllLog("成功移除：" + nodeName,DebugTool.LogType.UnityLog);
+                    Debug.Instance.DllLog("成功移除：" + nodeName,LogType.UnityLog);
                 }
             }
             myxml.Save(filePath);
@@ -113,7 +110,7 @@ namespace Ly.Xml
             XmlNode parentNode = myxml.SelectSingleNode(parentName == root.Name ? parentName : root.Name + "//" + parentName);
             if (parentNode == null)
             {
-                Debug.Instance.DllLog("Update 不存在此父节点:" + parentName,DebugTool.LogType.UnityLogWarning);
+                Debug.Instance.DllLog("Update 不存在此父节点:" + parentName,LogType.UnityLogWarning);
                 return;
             }
             XmlElement temp = myxml.CreateElement(nodeName);
@@ -131,7 +128,7 @@ namespace Ly.Xml
                 {
                     isexsit = true;
                     parentNode.ReplaceChild(temp, parentNode.ChildNodes[i]);
-                    Debug.Instance.DllLog("成功修改数据:" + nodeName,DebugTool.LogType.UnityLog);
+                    Debug.Instance.DllLog("成功修改数据:" + nodeName,LogType.UnityLog);
                     break;
                 }
             }
@@ -150,7 +147,7 @@ namespace Ly.Xml
             XmlNode parentNode = myxml.SelectSingleNode(nodeName == root.Name ? nodeName : root.Name + "//" + nodeName);
             if (parentNode == null)
             {
-                Debug.Instance.DllLog("不存在此父节点",DebugTool.LogType.UnityLogWarning);
+                Debug.Instance.DllLog("不存在此父节点",LogType.UnityLogWarning);
                 return null;
             }
             List<CCkeyValue> valueList = new List<CCkeyValue>();
@@ -176,7 +173,7 @@ namespace Ly.Xml
             XmlNode parentNode = myxml.SelectSingleNode(parentName == root.Name ? parentName : root.Name + "//" + parentName);
             if (parentNode == null)
             {
-               Debug.Instance.DllLog("没有此父节点",DebugTool.LogType.UnityLogWarning);
+               Debug.Instance.DllLog("没有此父节点",LogType.UnityLogWarning);
                 return defaultvalue;
             }
             string str = defaultvalue;

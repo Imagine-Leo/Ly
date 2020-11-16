@@ -1,13 +1,8 @@
-﻿using UnityEngine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System;
 
-namespace Ly.DebugTool
+namespace Ly.Tools
 {
-    public class Debug:Ly.Base.SingleInstance<Debug>
+    public class Debug:SingleInstance<Debug>
     {
         public static RunTimeEnvironment runTimeEnvironment = RunTimeEnvironment.ConsoleView;
         public static string logPrefix = "";

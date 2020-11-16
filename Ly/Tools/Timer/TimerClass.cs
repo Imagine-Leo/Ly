@@ -1,12 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using Debug = Ly.DebugTool.Debug;
+using Debug = Ly.Tools.Debug;
 
-namespace Ly.Timer
+namespace Ly.Tools.Timer
 {
     public class TimerClass
     {
@@ -50,7 +48,7 @@ namespace Ly.Timer
             {
                 this.tag = tag;
                 this.m_customLoopSpanTimes =
-                this.customLoopSpanTimes = loopSpanTimes;
+                    this.customLoopSpanTimes = loopSpanTimes;
                 this.nextTimePoint = 0;
                 this.loop = false;
             }
@@ -77,7 +75,7 @@ namespace Ly.Timer
                     }
                     else
                     {
-                        Debug.Instance.DllLog("m_customLoopSpanTimes null?", DebugTool.LogType.UnityLogError);
+                        Debug.Instance.DllLog("m_customLoopSpanTimes null?", LogType.UnityLogError);
                         return false;
                     }
                 }
@@ -85,16 +83,20 @@ namespace Ly.Timer
         }
 
         public int param = 20;
+
         public event TimeUpDelegate TimeUpEvent;
+
         //private const string DEBUGFORMAT = "yyyy/MM/dd/HH:mm:ss.ffffff";
         private List<Task> m_taskList = new List<Task>();
         private List<Task> m_removeList = new List<Task>();
         private Thread m_taskThread = null;
         private long m_startTicks = 0;
         private long m_curTicks = 0;
+
         private bool m_quitBool = false;
+
         //TODO实现暂停功能
-        private bool m_pauseBool = false;
+        // private bool m_pauseBool = false;
 
         /// <summary>
         /// 添加循环时间任务
@@ -111,6 +113,7 @@ namespace Ly.Timer
                 string newTag = _task.tag + Guid.NewGuid();
                 _task = new Task(newTag, spanTime, startTime);
             }
+
             m_taskList.Add(_task);
         }
 
@@ -129,6 +132,7 @@ namespace Ly.Timer
                 string newTag = _task.tag + Guid.NewGuid();
                 _task = new Task(newTag, loopSpanTimes);
             }
+
             m_taskList.Add(_task);
         }
 
@@ -150,7 +154,7 @@ namespace Ly.Timer
             m_quitBool = true;
             if (m_taskThread != null)
             {
-                Debug.Instance.DllLog("timer thread is abort .", DebugTool.LogType.UnityLogWarning);
+                Debug.Instance.DllLog("timer thread is abort .", LogType.UnityLogWarning);
                 m_taskThread.Abort();
             }
         }
@@ -183,14 +187,11 @@ namespace Ly.Timer
                         }
                         else
                         {
-                            if (m_removeList.Count != 0)//TODO:
+                            if (m_removeList.Count != 0) //TODO:
                             {
                                 for (int idex = 0; idex < m_removeList.Count; ++idex)
                                 {
-                                    Task tempTask = m_taskList.Find((task) =>
-                                    {
-                                        return task.tag == m_removeList[0].tag;
-                                    });
+                                    Task tempTask = m_taskList.Find((task) => { return task.tag == m_removeList[0].tag; });
                                     if (tempTask != null)
                                     {
                                         Debug.Instance.DllLog("手动移除：" + tempTask.tag);
@@ -200,9 +201,11 @@ namespace Ly.Timer
                                     {
                                         Debug.Instance.DllLog("手动移除失败：" + m_removeList[0].tag);
                                     }
+
                                     m_removeList.RemoveAt(0);
                                 }
                             }
+
                             m_curTicks = Stopwatch.GetTimestamp();
                             long _totalMilliSecond = (m_curTicks - m_startTicks) * 1000 / Stopwatch.Frequency;
                             for (int index = 0; index < m_taskList.Count; ++index)
@@ -223,6 +226,7 @@ namespace Ly.Timer
                     {
                         break;
                     }
+
                     Thread.Sleep(10);
                 }
             }));
@@ -234,10 +238,11 @@ namespace Ly.Timer
         /// 用于在高精度计算式获取开启程序时的值Stopwatch.GetTimestamp()
         /// </summary>
         /// <returns></returns>
-        public static long GetCurrentTimestamp()                   
+        public static long GetCurrentTimestamp()
         {
             return Stopwatch.GetTimestamp();
         }
+
         public static long GetDeltaMilliSecond(long startTicks, long endTicks)
         {
             return (endTicks - startTicks) * 1000 / Stopwatch.Frequency;

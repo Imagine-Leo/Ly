@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Debug = Ly.DebugTool.Debug;
-using Ly.DebugTool;
+using Ly.Tools;
 using Newtonsoft.Json;
-using System.Reflection;
-using Ly.Json;
+using Debug = Ly.Tools.Debug;
 
-namespace Ly.Base
+namespace Ly
 {
     public class EqualsClass<T> : IEquatable<T>
     {
@@ -42,7 +38,7 @@ namespace Ly.Base
                 filedList = new List<string>();
                 Type type = other.GetType();
                 Debug.Instance.DllLog("Type:" + JsonConvert.SerializeObject(type));
-                filedList = Ly.Reflection.ClassInfo.ClassAllMembersInfo(type);
+                filedList = ClassInfo.ClassAllMembersInfo(type);
                 for (int i = 0; i < filedList.Count; i++)
                 {
                     if (filedList[i].StartsWith("."))
@@ -55,8 +51,8 @@ namespace Ly.Base
             }
             string str1 = JsonConvert.SerializeObject(this);
             string str2 = JsonConvert.SerializeObject(other);
-            return StringArrayEquals(filedList, JsonTool.GetVauleByJtoken(filedList.ToArray(), str1),
-                JsonTool.GetVauleByJtoken(filedList.ToArray(), str2)
+            return StringArrayEquals(filedList, JsonTool.GetValuesByToken(filedList.ToArray(), str1),
+                JsonTool.GetValuesByToken(filedList.ToArray(), str2)
                 );
         }
 

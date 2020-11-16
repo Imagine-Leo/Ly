@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
-using System.Runtime.Remoting;
-using Newtonsoft.Json;
-using Debug = Ly.DebugTool.Debug;
+using Debug = Ly.Tools.Debug;
 
 
 //http://www.cnblogs.com/zuozuo/archive/2011/09/29/2195309.html
-namespace Ly.Reflection
+namespace Ly
 {
     public class ClassInfo
     {
         public static void Test()
         {
             Assembly ass = Assembly.GetExecutingAssembly();
-            InvokeMemberFunc(typeof(DebugTool.Debug), "DllLog");
+            InvokeMemberFunc(typeof(Debug), "DllLog");
         }
+
         public static List<string> ClassAllMembersInfo(Type type)
         {
             List<string> members = new List<string>();
-            MemberInfo[] minss = type.GetMembers(
+            MemberInfo[] memberInfos = type.GetMembers(
                 BindingFlags.Instance |
                 BindingFlags.Static |
                 BindingFlags.Public |
                 BindingFlags.NonPublic |
                 BindingFlags.DeclaredOnly);
 
-            foreach (MemberInfo item in minss)
+            foreach (MemberInfo item in memberInfos)
             {
                 members.Add(item.Name);
             }
+
             return members;
         }
 
@@ -73,17 +71,17 @@ namespace Ly.Reflection
                 //私有构造函数创建
                 target = Activator.CreateInstance(null, type.FullName, true, BindingFlags.Default | BindingFlags.Instance | BindingFlags.NonPublic, null, null, null, null, null).Unwrap();
             }
+
             try
             {
                 Debug.Instance.DllLog("共有函数调用:");
-                type.InvokeMember(funcName, BindingFlags.InvokeMethod, null, target, new string[] { "TestLog" }, null);
+                type.InvokeMember(funcName, BindingFlags.InvokeMethod, null, target, new string[] {"TestLog"}, null);
             }
             catch
             {
                 Debug.Instance.DllLog("私有函数调用:");
-                type.InvokeMember(funcName, BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, target, new string[] { "TestLog" }, null);
+                type.InvokeMember(funcName, BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, target, new string[] {"TestLog"}, null);
             }
         }
-
     }
 }

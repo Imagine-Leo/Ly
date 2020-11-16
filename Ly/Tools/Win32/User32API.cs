@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using Debug = Ly.DebugTool.Debug;
+using Debug = Ly.Tools.Debug;
 
-namespace Ly.Win32
+namespace Ly.Tools
 {
     class User32API
     {
@@ -50,7 +47,7 @@ namespace Ly.Win32
                 }
                 else
                 {
-                    Debug.Instance.DllLog("再次查询null", DebugTool.LogType.UnityLog);
+                    Debug.Instance.DllLog("再次查询null", LogType.UnityLog);
                     ptrWnd = IntPtr.Zero;
                 }
             }
@@ -66,7 +63,7 @@ namespace Ly.Win32
             }
             else
             {
-                Debug.Instance.DllLog("error", DebugTool.LogType.UnityLogError);
+                Debug.Instance.DllLog("error", LogType.UnityLogError);
             }
             return ptrWnd;
         }
@@ -80,7 +77,7 @@ namespace Ly.Win32
                 {
                     processWnd[uiPid] = hwnd;   // 把句柄缓存起来
                     SetLastError(0);    // 设置无错误
-                    Debug.Instance.DllLog("主题名字" + Process.GetCurrentProcess().MainWindowTitle, DebugTool.LogType.UnityLog);
+                    Debug.Instance.DllLog("主题名字" + Process.GetCurrentProcess().MainWindowTitle, LogType.UnityLog);
                     return false;   // 返回 false 以终止枚举窗口
                 }
             }

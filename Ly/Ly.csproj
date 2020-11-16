@@ -5,11 +5,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B46E6D7D-1823-425F-8C62-F4630F7D1AF7}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ly</RootNamespace>
     <AssemblyName>Ly</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <PublishUrl>publish\</PublishUrl>
@@ -27,6 +27,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,33 +73,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\Equals.cs" />
-    <Compile Include="Base\SingleInstance.cs" />
-    <Compile Include="Base\SingleInstanceExample.cs" />
-    <Compile Include="CMDConsole\CMDConsole.cs" />
-    <Compile Include="Debug\Ref.cs" />
-    <Compile Include="Debug\Debug.cs" />
-    <Compile Include="Excel\EasyExcel.cs" />
-    <Compile Include="Extend\Extend.cs" />
-    <Compile Include="Json\JsonTool.cs" />
+    <Compile Include="DimSums\Equals.cs" />
+    <Compile Include="DimSums\SingleInstance.cs" />
+    <Compile Include="Extensions\ClassInfo.cs" />
+    <Compile Include="Extensions\Extend.cs" />
+    <Compile Include="Extensions\JsonTool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\ClassInfo.cs" />
-    <Compile Include="Timer\TimerClass.cs" />
-    <Compile Include="Timer\TimerComponent.cs" />
-    <Compile Include="Win32\ScreenTool.cs" />
-    <Compile Include="Win32\User32API.cs" />
-    <Compile Include="Xml\EasyXml.cs" />
-    <Compile Include="Xml\MultilevelXml.cs" />
+    <Compile Include="Tools\CMDConsole\CMDConsole.cs" />
+    <Compile Include="Tools\Debug\Debug.cs" />
+    <Compile Include="Tools\Debug\Ref.cs" />
+    <Compile Include="Tools\Excel\EasyExcel.cs" />
+    <Compile Include="Tools\Timer\TimerClass.cs" />
+    <Compile Include="Tools\Timer\TimerComponent.cs" />
+    <Compile Include="Tools\Win32\ScreenTool.cs" />
+    <Compile Include="Tools\Win32\User32API.cs" />
+    <Compile Include="Tools\Xml\EasyXml.cs" />
+    <Compile Include="Tools\Xml\MultilevelXml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Plugins\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

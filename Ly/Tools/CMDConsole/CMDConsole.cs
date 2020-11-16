@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
-using Debug = Ly.DebugTool.Debug;
+using Debug = Ly.Tools.Debug;
 
 
-namespace Ly.CMDConsole
+namespace Ly.Tools.CMDConsole
 {
     //http://blog.csdn.net/cartzhang/article/details/49884507
     /// <summary>
@@ -17,8 +15,8 @@ namespace Ly.CMDConsole
     /// </summary>
     public class CMDConsole
     {
-
         #region
+
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool AttachConsole(uint dwProcessId);
 
@@ -33,9 +31,11 @@ namespace Ly.CMDConsole
 
         [DllImport("kernel32.dll")]
         static extern bool SetConsoleTitle(string lpConsoleTitle);
+
         #endregion
 
         private TextWriter oldOutput;
+
         public void Initialize(bool ISUNITY = false)
         {
             AllocConsole();
@@ -43,8 +43,8 @@ namespace Ly.CMDConsole
 
             try
             {
-                IntPtr p = Win32.User32API.GetCurrentWindowHandle();
-                Debug.Instance.DllLog("当前程序句柄" + p,DebugTool.LogType.UnityLog);
+                IntPtr p = User32API.GetCurrentWindowHandle();
+                Debug.Instance.DllLog("当前程序句柄" + p, LogType.UnityLog);
                 Microsoft.Win32.SafeHandles.SafeFileHandle safeFileHandle = new Microsoft.Win32.SafeHandles.SafeFileHandle(p, true);
                 FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write);
                 StreamWriter standardOutput = new StreamWriter(fileStream, Encoding.ASCII);
@@ -53,22 +53,26 @@ namespace Ly.CMDConsole
             }
             catch (Exception e)
             {
-                Debug.Instance.DllLog("Couldn't redirect output: " + e.Message,DebugTool.LogType.UnityLogError);
+                Debug.Instance.DllLog("Couldn't redirect output: " + e.Message, LogType.UnityLogError);
             }
         }
+
         public void Shutdown()
         {
             Console.SetOut(oldOutput);
             FreeConsole();
         }
+
         public void SetTitle(string strName)
         {
             SetConsoleTitle(strName);
         }
+
         //===========================================================输入===========================================================================
-        //public delegate void InputText( string strInput );  
+        //public delegate void InputText( string strInput );
         public event System.Action<string> OnInputText;
         public string inputString;
+
         public void RedrawInputLine()
         {
             if (inputString.Length == 0) return;
@@ -107,6 +111,7 @@ namespace Ly.CMDConsole
                 inputString = "";
                 return;
             }
+
             //空格
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -115,9 +120,10 @@ namespace Ly.CMDConsole
                 return;
             }
         }
+
         private void _ClearLine()
         {
-            // System.Text.Encoding test = Console.InputEncoding;  
+            // System.Text.Encoding test = Console.InputEncoding;
             Console.CursorLeft = 0;
             Console.Write(new String(' ', Console.BufferWidth));
             Console.CursorTop--;

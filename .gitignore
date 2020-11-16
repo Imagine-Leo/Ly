@@ -1,7 +1,9 @@
 *~
 .DS_Store
 *.apk
-Temp
 /.vs
+/.idea
+/Ly/bin/
+/Ly/obj/
 *.exe
 packages

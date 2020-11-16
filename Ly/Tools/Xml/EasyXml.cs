@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml;
-using Debug = Ly.DebugTool.Debug;
+using Debug = Ly.Tools.Debug;
 
-namespace Ly.Xml
+namespace Ly.Tools
 {
     public class EasyXml
     {
@@ -32,7 +29,7 @@ namespace Ly.Xml
                 }
                 else
                 {
-                    Debug.Instance.DllLog("Duplicated key " + key + " in config file " + _configPath, DebugTool.LogType.UnityLogError);
+                    Debug.Instance.DllLog("Duplicated key " + key + " in config file " + _configPath, LogType.UnityLogError);
                 }
             }
         }
@@ -44,7 +41,7 @@ namespace Ly.Xml
             }
             else
             {
-                Debug.Instance.DllLog("配置表没有此配置返回默认值并写入默认值",DebugTool.LogType.UnityLogWarning);
+                Debug.Instance.DllLog("配置表没有此配置返回默认值并写入默认值",LogType.UnityLogWarning);
                 SetString(key, defaultVal);
                 return defaultVal;
             }
@@ -72,7 +69,7 @@ namespace Ly.Xml
                 if (ee.Name == nodeName)
                 {
                     xmlDoc.DocumentElement.RemoveChild(ee);
-                    Debug.Instance.DllLog("成功移除配置表属性" + nodeName,DebugTool.LogType.UnityLog);
+                    Debug.Instance.DllLog("成功移除配置表属性" + nodeName,LogType.UnityLog);
                     break;
                 }
             }

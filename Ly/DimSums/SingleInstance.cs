@@ -1,18 +1,15 @@
-﻿using Ly.DebugTool;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading;
 using UnityEngine;
-using Debug = Ly.DebugTool.Debug;
+using Debug = Ly.Tools.Debug;
 
-namespace Ly.Base
+namespace Ly
 {
     public class SingleInstance<T> where T : new()
     {
         private static T _instance = default(T);
         private static object objectLock = new object();
+
         public static T Instance
         {
             get
@@ -28,47 +25,47 @@ namespace Ly.Base
                     }
                     catch (Exception ex)
                     {
-                        UnityEngine.Debug.LogError(ex.Message);
+                        Debug.LogError(ex.Message);
                     }
                     finally
                     {
                         Monitor.Exit(obj);
                     }
                 }
+
                 return _instance;
             }
-            protected set
-            {
-                _instance = value;
-            }
         }
-        public SingleInstance() { }
     }
+
     public class SingleInstanceComponent<T> where T : MonoBehaviour
     {
         private static T instance = null;
+
         public static T Instance
         {
             get
             {
-                if (instance == null)
-                    Ly.DebugTool.Debug.LogError("instance null Error,Waiting Awake init...");
+                if (!instance)
+                {
+                    Debug.Log($"init manager {typeof(T).Name}");
+                    instance = UnityEngine.Object.FindObjectOfType<T>();
+                    if (!instance)
+                    {
+                        instance = new GameObject().AddComponent<T>();
+                        instance.gameObject.name = typeof(T).ToString();
+                    }
+                }
+
                 return instance;
             }
-            protected set
-            {
-                instance = value;
-            }
+            protected set { instance = value; }
         }
+
         public void Awake()
         {
             if (instance == null)
                 instance = this as T;
-            else
-            {
-                UnityEngine.Debug.LogError("instance is already have one,i will destory this");
-            }
         }
-        public SingleInstanceComponent() { }
     }
 }
